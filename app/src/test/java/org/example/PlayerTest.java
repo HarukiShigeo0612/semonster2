@@ -17,6 +17,7 @@ public class PlayerTest {
     public void testPlayerInitialization() {
         assertEquals("太郎", player.getName());
         assertEquals(0, player.getDeckSize());
+        assertEquals(100, player.getHp());
     }
 
     @Test
@@ -62,6 +63,7 @@ public class PlayerTest {
         String result = player.toString();
 
         assertTrue(result.contains("Deck:太郎"));
+        assertTrue(result.contains("HP:100"));
         assertTrue(result.contains("デュラハン:レア度[0]"));
         assertTrue(result.contains("ゴブリン:レア度[2]"));
     }
@@ -85,7 +87,7 @@ public class PlayerTest {
         String[] lines = result.split("\n");
 
         assertEquals(8, player.getDeckSize());
-        assertEquals(9, lines.length);  // "Deck:太郎" + 8体
+        assertEquals(9, lines.length);  // "Deck:太郎 HP:100" + 8体
     }
 
     @Test
@@ -108,5 +110,39 @@ public class PlayerTest {
         player.getDeck().add(new Monster("ゴブリン", 2));
 
         assertEquals(1, player.getDeckSize());
+    }
+
+    @Test
+    public void testDamageReducesHp() {
+        player.damage(30);
+        assertEquals(70, player.getHp());
+    }
+
+    @Test
+    public void testHpDoesNotGoBelowZero() {
+        player.damage(150);
+        assertEquals(0, player.getHp());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDamageWithNegativeValue() {
+        player.damage(-10);
+    }
+
+    @Test
+    public void testIsAlive() {
+        assertTrue(player.isAlive());
+        player.damage(100);
+        assertFalse(player.isAlive());
+    }
+
+    @Test
+    public void testHpIsIndependentBetweenPlayers() {
+        Player player2 = new Player("花子");
+
+        player.damage(40);
+
+        assertEquals(60, player.getHp());
+        assertEquals(100, player2.getHp());
     }
 }
