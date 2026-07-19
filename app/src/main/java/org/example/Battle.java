@@ -27,21 +27,57 @@ public class Battle {
 
     // 1ターン分の対戦を行い、結果を文字列で返す
     public String turn(Player p1, Player p2, int index1, int index2) {
-        Monster m1 = p1.getMonster(index1);
-        Monster m2 = p2.getMonster(index2);
+      Monster m1 = p1.getMonster(index1);
+      Monster m2 = p2.getMonster(index2);
 
-        int result = judge(m1, m2);
+      int result = judge(m1, m2);
 
-        if (result == 1) {
-            int damage = calcDamage(m1, m2);
-            p2.damage(damage);
-            return p1.getName() + "の勝ち：" + p2.getName() + "に" + damage + "のダメージ";
-        } else if (result == -1) {
-            int damage = calcDamage(m2, m1);
-            p1.damage(damage);
-            return p2.getName() + "の勝ち：" + p1.getName() + "に" + damage + "のダメージ";
-        } else {
-            return "引き分け";
-        }
+      if (result == 1) {
+        int damage = calcDamage(m1, m2);
+        p2.damage(damage);
+        return p1.getName() + "の勝ち：" + p2.getName() + "に" + damage + "のダメージ";
+      } else if (result == -1) {
+        int damage = calcDamage(m2, m1);
+        p1.damage(damage);
+        return p2.getName() + "の勝ち：" + p1.getName() + "に" + damage + "のダメージ";
+      } else {
+        return "引き分け";
+      }
+    }
+
+    // モンスター同士で1ターン対戦し、負けたモンスターにダメージを与える
+    public String monsterTurn(Player p1, Player p2, int index1, int index2) {
+      Monster m1 = p1.getMonster(index1);
+      Monster m2 = p2.getMonster(index2);
+
+      int result = judge(m1, m2);
+
+      if (result == 1) {
+        int damage = calcDamage(m1, m2);
+        m2.damage(damage);
+
+        return m1.getName()
+            + "の勝ち："
+            + m2.getName()
+            + "に"
+            + damage
+            + "のダメージ "
+            + m2.getHpBar();
+
+      } else if (result == -1) {
+        int damage = calcDamage(m2, m1);
+        m1.damage(damage);
+
+        return m2.getName()
+            + "の勝ち："
+            + m1.getName()
+            + "に"
+            + damage
+            + "のダメージ "
+            + m1.getHpBar();
+
+      } else {
+        return "引き分け";
+      }
     }
 }
