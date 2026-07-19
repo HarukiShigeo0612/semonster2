@@ -6,14 +6,34 @@ import java.util.List;
 public class Player {
     private String name;
     private List<Monster> deck;
+    private int hp;
 
     public Player(String name) {
         this.name = name;
         this.deck = new ArrayList<>();
+        this.hp = 100;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void damage(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("ダメージは0以上である必要があります");
+        }
+        this.hp -= amount;
+        if (this.hp < 0) {
+            this.hp = 0;
+        }
+    }
+
+    public boolean isAlive() {
+        return hp > 0;
     }
 
     public void addMonster(Monster monster) {
@@ -38,7 +58,7 @@ public class Player {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Deck:").append(name).append("\n");
+        sb.append("Deck:").append(name).append(" HP:").append(hp).append("\n");
         for (Monster monster : deck) {
             sb.append(monster.toString()).append("\n");
         }
