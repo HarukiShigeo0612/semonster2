@@ -10,7 +10,7 @@ public class MonsterTest {
   @Test
   public void testToString() {
     Monster m = new Monster("デュラハン", 0);
-    assertEquals("デュラハン:レア度[0]", m.toString());
+    assertEquals("デュラハン:レア度[0]:HP[100]", m.toString());
   }
 
   // summonMonster のテスト：0を渡すとデュラハンが返る
@@ -27,7 +27,7 @@ public class MonsterTest {
   public void testEvolve() {
     Monster m = new Monster("ドラゴン", 3);
     assertEquals("進化ドラゴン", m.getName());
-    assertEquals("進化ドラゴン:レア度[3]", m.toString());
+    assertEquals("進化ドラゴン:レア度[3]:HP[250]", m.toString());
   }
 
   // 進化しないケースのテスト：レア度2以下ならそのまま
@@ -35,5 +35,13 @@ public class MonsterTest {
   public void testNoEvolve() {
     Monster m = new Monster("ゴブリン", 2);
     assertEquals("ゴブリン", m.getName());
+  }
+
+  // HP計算のテスト：レア度4ならHPは300になる
+  @Test
+  public void testHp() {
+    Monster m = new Monster("フェニックス", 4);
+
+    assertEquals(300, m.getHp());
   }
 }

@@ -4,16 +4,25 @@ package org.example;
 
 public class Monster {
     private String name;   // モンスターの名前
-    private int rarity;    // レア度（0～4）
+    private int rarity; // レア度（0～4）
+    private int hp;
 
     // コンストラクタ：名前とレア度を受け取る（p.17）
     public Monster(String name, int rarity) {
-        this.name = name;
-        this.rarity = rarity;
-        // レア度が3以上のときは進化して名前が変わる（p.17）
-        if (this.rarity >= 3) {
-            evolve();
-        }
+      this.name = name;
+      this.rarity = rarity;
+      // レア度からHPを計算する
+      this.hp = calculateHp();
+      // レア度が3以上のときは進化して名前が変わる（p.17）
+      if (this.rarity >= 3) {
+        evolve();
+      }
+    }
+
+    // HPの計算
+    private int calculateHp() {
+      hp = 100 + rarity * 50;
+      return hp;
     }
 
     // 進化処理：名前の先頭に「進化」を付ける
@@ -34,7 +43,7 @@ public class Monster {
     // 表示処理（p.17）例：「デュラハン:レア度[0]」
     @Override
     public String toString() {
-        return name + ":レア度[" + rarity + "]";
+        return name + ":レア度[" + rarity + "]" + ":HP[" + hp + "]";
     }
 
     // ゲッター（テストや他クラスから使う用）
@@ -43,6 +52,10 @@ public class Monster {
     }
 
     public int getRarity() {
-        return rarity;
+      return rarity;
+    }
+
+    public int getHp() {
+      return hp;
     }
 }
