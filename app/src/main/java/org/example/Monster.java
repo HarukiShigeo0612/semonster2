@@ -108,4 +108,23 @@ public class Monster {
   public int getMaxHp() {
     return maxHp;
   }
+
+  // モンスターがダメージを受ける
+  public void damage(int amount) {
+    if (amount < 0) {
+      throw new IllegalArgumentException("ダメージは0以上である必要があります");
+    }
+
+    this.hp -= amount;
+
+    // HPが0未満にならないようにする
+    if (this.hp < 0) {
+      this.hp = 0;
+    }
+  }
+
+  // モンスターが生きているか確認する
+  public boolean isAlive() {
+    return hp > 0;
+  }
 }

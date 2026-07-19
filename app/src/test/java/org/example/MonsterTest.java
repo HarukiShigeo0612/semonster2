@@ -70,4 +70,26 @@ public class MonsterTest {
         "HP[■■■■■■■■■■] 100/100",
         monster.getHpBar());
   }
+
+  @Test
+  public void testMonsterDamage() {
+    Monster monster = new Monster("デュラハン", 0);
+
+    monster.damage(30);
+
+    assertEquals(70, monster.getHp());
+    assertEquals(
+        "HP[■■■■■■■□□□] 70/100",
+        monster.getHpBar());
+  }
+
+  @Test
+  public void testMonsterHpDoesNotGoBelowZero() {
+    Monster monster = new Monster("デュラハン", 0);
+
+    monster.damage(150);
+
+    assertEquals(0, monster.getHp());
+    assertFalse(monster.isAlive());
+  }
 }

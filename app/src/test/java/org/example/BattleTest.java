@@ -93,7 +93,25 @@ public class BattleTest {
 
     @Test
     public void testHpDoesNotGoBelowZero() {
-        p1.damage(150);
-        assertEquals(0, p1.getHp());
+      p1.damage(150);
+      assertEquals(0, p1.getHp());
+    }
+
+    @Test
+    public void testMonsterTurnPlayer1Wins() {
+      Monster m1 = new Monster("ゴブリン", 2);
+      Monster m2 = new Monster("デュラハン", 0);
+
+      p1.addMonster(m1);
+      p2.addMonster(m2);
+
+      String result = battle.monsterTurn(p1, p2, 0, 0);
+
+      assertEquals(200, m1.getHp());
+      assertEquals(80, m2.getHp());
+
+      assertTrue(result.contains("ゴブリンの勝ち"));
+      assertTrue(result.contains("20のダメージ"));
+      assertTrue(result.contains("80/100"));
     }
 }
