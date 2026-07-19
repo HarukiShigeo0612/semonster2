@@ -19,6 +19,12 @@ public class Monster {
     if (this.rarity >= 3) {
       evolve();
     }
+
+    // レア度が4以上なら超進化
+    if (this.rarity >= 4) {
+      superEvolve();
+    }
+
   }
 
   // HPの計算
@@ -29,6 +35,11 @@ public class Monster {
   // 進化処理
   private void evolve() {
     this.name = "進化" + this.name;
+  }
+
+  // 超進化処理
+  private void superEvolve() {
+    this.name = "超" + this.name;
   }
 
   // 召喚処理

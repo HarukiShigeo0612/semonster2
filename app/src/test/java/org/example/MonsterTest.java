@@ -36,6 +36,17 @@ public class MonsterTest {
         m.toString());
   }
 
+  // 進化のテスト：レア度4以上だと名前の頭に「超進化」が付く
+  @Test
+  public void testSuperEvolve() {
+    Monster m = new Monster("ドラゴン", 4);
+
+    assertEquals("超進化ドラゴン", m.getName());
+    assertEquals(
+        "超進化ドラゴン:レア度[4]:HP[■■■■■■■■■■] 300/300",
+        m.toString());
+  }
+
   // 進化しないケースのテスト：レア度2以下ならそのまま
   @Test
   public void testNoEvolve() {
